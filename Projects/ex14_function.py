@@ -165,6 +165,17 @@ print()
 
 
 
+num2 = max(10,20,30,5,60)
+print('num2:', num2)
+
+def get_max(a, b):
+    if a > b:
+        return a
+    else:
+        return b
+result= get_max(100,200)
+print('result:', result)
+
 
 
 
