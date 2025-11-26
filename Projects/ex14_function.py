@@ -157,7 +157,155 @@ gg()
 print()
 #-------------------------------------------
 
-#5. 리턴을 해주는 함수..
+#5. 리턴을 해주는 함수.. -- 함수안에 print()로 출력만 하는게 아니라.. 연산결과를 함수를 호출하는 쪽으로 되돌려 주는 문법 return
+def aaa():
+    return 10  #10이라는 값을 호출하는 쪽으로 돌려주는 기능함수
+
+num= aaa() # 함수의 실행결과인 return 값 10을 받으려면 = 대입 연산자로만 받을 수 있음.
+print(num)
+
+num2= aaa()
+print(num2)
+
+# 'hello'라는 문자열을 리턴해주는 기능
+def bbb():
+    return 'hello' 
+
+s= bbb()
+print(s)
+
+s2= bbb()
+print(s2)
+
+# 리턴받는 모습을 처음보는 것이 아님.. 내장함수 사용할때..
+#num1= input()
+#m= max(10,50,60,70,50)
+
+# 매번 같은 값만 리턴되면 효용가치가 떨어지는 기능임.
+# 2개의 정수를 전달하면 덧셈의 결과를 계산해서 리턴해주는 기능(함수)
+def add(a, b):
+    x= a+b
+    return x
+
+num= add(3,5)
+print(num)
+
+num= add(8,6)
+print(num/2)
+
+# return 을 할때.. 값이 없이 사용하는 것도 가능함
+def ccc():
+    print('ccc function')
+    return #이 글자를 만나면 되돌아 가라고 하는 것이어서 이 함수의 코드영역이 종료되는 것을 의미함
+    print('zzzzz') # 여긴 실행 안됨.
+
+ccc()
+
+def ddd(n):
+    #음수면 출력 금지..    
+    if n<0:
+        print('음수는 출력이 금지됩니다.')
+        return
+    print(n)
+
+ddd(10)
+ddd(-10)
+print()
+
+# 만약, 실수로 리턴값이 없는 함수의 실행결과를 대입받으면.. None
+def eee():
+    print("eee!!!!!")
+
+x= eee()
+print(x) 
+print()
+
+# 리턴값은 원래 1개만 가능함.. 근데.. 파이썬은 여러개를 해도 에러 아님.
+def fff():
+    print('fff~~~~~~~~~')
+    return 10,20,30
+
+a,b,c= fff()
+print(a)
+print(b)
+print(c)
+
+#일반변수 대입도 한번에 여러개 대입 되었었음.
+n1, n2= 100,200
+#n1, n2, n3= 1,2 #error
+
+a= 1000,2000 # a변수가 여러개의 값을 가진 것이 아님. 튜플 1개를 가짐
+print(a)
+print(type(a))
+
+def ggg():
+    print('ggggggggggggggg')
+    return 100,200,300
+
+#a,b,c,d= ggg() #error
+a= ggg() # 리턴값들을 자동으로 Tuple 로..
+print(a)
+
+n= ('aa','bb')
+print(n[0])
+print(n[1])
+
+a,b= n # 튜플이나 리스트의 요소를 분해하여 변수에 대입가능
+print(a)
+print(b)
+
+def hhh():
+    return ['sam','robin','hong']
+
+name_list= hhh()
+print(name_list)
+print(len(name_list))
+print(len(name_list[0]))
+print(len(name_list[1]))
+print(len(name_list[2]))
+
+#리턴된 리스트1개를 분해하여 요소별로 변수에 바로 대입
+name1, name2, name3= hhh()
+print(name1.upper())
+print(name2.upper())
+print(name3.upper())
+print()
+
+# [별외.] 지역변수(local variable)와 전역변수(global variable)에 대한 이해...
+def mmm():
+    age=20 #지역변수 - 함수 안에서 처음 만들어진 변수 : 이 지역안에서만 인식 가능
+    print('나이:',age)
+
+mmm()
+#함수의 지역변수는 밖에서 사용 불가능
+#print('밖:', age) #error
+
+#함수 밖에 만든 변수는 전역변수임...
+name= 'park' 
+def nnn():
+    # 함수안에서 변수값을 변경하려는 코드를 쓰면.. 새로운 지역변수 생성문법으로 인식함
+    name='kim' # 새로운 지역변수를 만들었다고 생각함.
+    print('함수 안 :', name) #밖에서 만들어진 변수(전역변수라고도 부름)를 사용할 수 있음.
+
+nnn()
+print('함수 밖 :', name) # 여기서도 사용가능. 그래서 전역변수라고 부름.
+
+# 그래서 함수안에서 전역변수의 값을 변경하고 싶다면... 내가 사용는 변수가 전역변수임을 명시적으로 알려줘야 함.
+def ttt():
+    #name='aaa'
+    global name #이 함수안에서 name 변수는 밖에 있는 전역변수를 사용할 것이라고 명시!!!
+    name='lee'
+    print('함수 안 :', name)
+
+ttt()
+print('함수 밖 :', name, end='\n')
+
+print('aaa')
+print(20)
+
+def aaa(a,n):
+    print('aaa')
+    return a+n
 
 
 
@@ -165,16 +313,10 @@ print()
 
 
 
-num2 = max(10,20,30,5,60)
-print('num2:', num2)
 
-def get_max(a, b):
-    if a > b:
-        return a
-    else:
-        return b
-result= get_max(100,200)
-print('result:', result)
+
+
+
 
 
 
