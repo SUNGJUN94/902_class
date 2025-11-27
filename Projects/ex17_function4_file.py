@@ -35,15 +35,15 @@ file.close()
 #(응용) 사용자로부터 한줄 리뷰를 계속 입력받아.. 파일에 저장. 단, 'quit'을 입력하면 입력을 종료하는 프로그램
 file= open('ddd.txt', 'a', encoding='UTF-8')
 
-while True:
-    message= input('리뷰 입력 : ')
-    if message=='quit' or message=='그만':
-        break
+# while True:
+#     message= input('리뷰 입력 : ')
+#     if message=='quit' or message=='그만':
+#         break
 
-    file.write(message+'\n')
+#     file.write(message+'\n')
 
-file.close()
-#-----------------------------------
+# file.close()
+# #-----------------------------------
 
 #4. 파일경로에 폴더명 ....
 file= open('files/aaa.txt', 'w') #files 폴더안에... [만약. files 라는 폴더가 없다면.. 에러!! 폴더(디렉토리)는 자동으로 만들어주지 않음.]
@@ -132,3 +132,55 @@ print("--------------------")
 
 with open("files/short story.txt" , "r" , encoding='utf-8')as f:
     print(f.read())
+
+print("=================")
+
+with open("files/member.csv" , "r" , encoding="UTF-8")as f:
+    # contents = f.read()
+    # print(f.read())
+    # print(contents)
+
+    #보통의 표형태의 데이터 구조는 한줄에 한 아이템의 정보들의 존재함.
+    #그래서 한줄 단위로 읽어서 처리
+    
+
+    for line in f:
+        print('한줄씩 데이터:' , line)
+        
+        name , age , address=line.split(',')
+        print('이름:' , name)
+        print('나이:' , age)
+        print('주소:' , address)
+    # 한 줄 안에 있는 여러개의 데이터를 분리해서 취득하기
+
+    # data_list=line.split(',')
+    # print(data_list)
+
+        name , age , address=line.split(',')
+        print('이름:' , name)
+
+        if age.isdigit():
+            print('나이:' , int(age)+1)
+        print("주소:" , address)
+
+#[추가] mode 지정할 때 + 기호...
+#1) w+ (읽기 + 쓰기 모두 가능)
+with open('ggg.txt' , 'w+' , encoding="UTF-8")as file:
+    file.write('re new dataaaaaaaaaaaaaaaaaaaaadsdasdasdasd')
+    file.seek(0) # 커서를 처음위치로
+    contents= file.read()
+    print(contents)
+
+    #기존에 꺼를 전부다 지우고 새롭게 작성
+#2) a+
+
+with open('ggg.txt' , 'a+' , encoding="UTF-8")as f:
+    f.write(" test a+")
+    content = f.read()
+    print(content)
+#3) r+
+
+with open("ggg.txt" , "r+" , encoding="UTF-8")as f:
+    f.write(" 3번째 test running..")
+    concat = f.read()
+    print(concat)
