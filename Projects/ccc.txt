@@ -106,9 +106,3 @@ orange
 apple
 banana
 orange
-apple
-banana
-orange
-apple
-banana
-orange

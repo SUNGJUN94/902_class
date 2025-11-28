@@ -35,15 +35,15 @@ file.close()
 #(응용) 사용자로부터 한줄 리뷰를 계속 입력받아.. 파일에 저장. 단, 'quit'을 입력하면 입력을 종료하는 프로그램
 file= open('ddd.txt', 'a', encoding='UTF-8')
 
-# while True:
-#     message= input('리뷰 입력 : ')
-#     if message=='quit' or message=='그만':
-#         break
+while True:
+    message= input('리뷰 입력 : ')
+    if message=='quit' or message=='그만':
+        break
 
-#     file.write(message+'\n')
+    file.write(message+'\n')
 
-# file.close()
-# #-----------------------------------
+file.close()
+#-----------------------------------
 
 #4. 파일경로에 폴더명 ....
 file= open('files/aaa.txt', 'w') #files 폴더안에... [만약. files 라는 폴더가 없다면.. 에러!! 폴더(디렉토리)는 자동으로 만들어주지 않음.]
@@ -105,82 +105,89 @@ with open('ggg.txt', 'w') as file:
     
 # close()를 안해도 자동으로 with 영역이 종료되면 file객체에게 close()를 요청해줌.
 
-
-
-
-with open('files/long story.txt' , 'r' , encoding='UTF-16')as file:
-    contents = file.read()
+#8. 아주 긴 파일을 읽어와서 출력해보기
+with open('files/long story.txt', 'r', encoding='UTF-16') as file: # 'utf-8','utf-16','cp949(ANSI)','ECU-KR'
+    contents= file.read() # 모든 글씨를 하나의 문자열로 읽어오기
     print(contents)
+print("-"*30)
 
-print("------------------------------------")
-
-# 대량의 데이터를 파일로부터 읽어서 분석하려면,,,
-#일단 대부분의 경우 한줄 단위로 처리함.
-#그러려면.. split('\n')을 통해서 한줄 단위로 분리하여 리스트로 만들어 처리
-#이 작업이 번거로워서.. 다행히 file객체가 이미 한줄 단위씩
-#읽어오는 기능 함수가 잇음.
-
-with open("files/short story.txt" , "r"  , encoding="UTF-8")as file:
-    #text = file.read()
-    #print(text)
-    line = file.readline() # 한줄읽기
-    print("첫번째 줄 문자열 :" , line)
+#9. 대량의 데이터를 파일로 부터 읽어서 분석하려면... 일단. 대부분의 경우 한줄 단위로 처리함.
+#   그러려면.. split('\n')을 통해 한줄 단위로 분리하여 리스트로 만들어 처리..
+#   이 작업이 번거로워서.. 다행히 file 객체가 이미 한줄 단위씩 읽어오는 기능함수가 존재함.
+with open('files/short story.txt', 'r', encoding='utf-8') as file:
+    line= file.readline() #한줄 읽기
+    print('첫번째 줄 문자열 :', line)
 print("-"*30)
 print()
 
-print("--------------------")
+#10.
+# 데이터분석을 하려면 데이터셋(data set)파일들을 많이 읽어와야 하는데.. 보통 이 파일들은 엑셀형태가 많음..
+# 엑셀파일을 읽어서 데이터를 분석하는 경우가 아주 많음.. 이를 시도...했으나.. 실패
+# 엑셀이나. hwp 파일들은 데이터외이 추가정보를 보유하고 있어서.. 그래도 읽어지지 않음.
+# 파이썬의 표준 함수중에는 엑셀파일을 읽을 수 있는 기능함수가 없음.
+# 외부 라이브러리 중에는 존재함.. 보통 이를 사용함. pandas 라이브러리에..엑셀파일 쉽게 읽어오는 기능 존재함.
 
-with open("files/short story.txt" , "r" , encoding='utf-8')as f:
-    print(f.read())
-
-print("=================")
-
-with open("files/member.csv" , "r" , encoding="UTF-8")as f:
-    # contents = f.read()
-    # print(f.read())
-    # print(contents)
-
+# 대부분의 분석할 데이터들을 표형태(행 row, 열 column 구조)를 가지고 만들어짐. 
+# 이를 위해 등장한 데이터표기형식(csv, xml, json)
+with open('files/member.csv', 'r', encoding='UTF-8') as file:
+    #contents= file.read() # 통으로 한방에 모두 읽어오면 분석할때 짜증.
     #보통의 표형태의 데이터 구조는 한줄에 한 아이템의 정보들의 존재함.
     #그래서 한줄 단위로 읽어서 처리
     
-
-    for line in f:
-        print('한줄씩 데이터:' , line)
+    for line in file:  # 자동으로 readLine()을 하면서 반복수행함
+        print('한줄 데이터 :', line)       
         
-        name , age , address=line.split(',')
-        print('이름:' , name)
-        print('나이:' , age)
-        print('주소:' , address)
-    # 한 줄 안에 있는 여러개의 데이터를 분리해서 취득하기
+        # 한줄 안에 있는 여러개의 데이터를 분리해서 취득하기 - csv 분석(parse)
+        # data_list= line.split(',')
+        # print(data_list)
+        # print('이름 :', data_list[0])
+        # print('나이 :', data_list[1])
+        # print('주소 :', data_list[2])
 
-    # data_list=line.split(',')
-    # print(data_list)
+        # # 인덱스 번호로 칸의 의미를 해석하기 불편-- 리스트의 요소를 분해하여 변수에 대입
+        # name, age, address= data_list
+        # print('이름 :', name)
+        # print('나이 :', age)
+        # print('주소 :', address)
+        name, age, address= line.split(',')
+        print('이름 :', name)
+        #나이를 1 증가시킨 값을 출력하고 싶다면..
+        if age.strip().isdigit(): # 문자열이 숫자로만 이루어 졌는가?
+            print('나이 :', int(age) +1)
+        print('주소 :', address)
 
-        name , age , address=line.split(',')
-        print('이름:' , name)
-
-        if age.isdigit():
-            print('나이:' , int(age)+1)
-        print("주소:" , address)
 
 #[추가] mode 지정할 때 + 기호...
-#1) w+ (읽기 + 쓰기 모두 가능)
-with open('ggg.txt' , 'w+' , encoding="UTF-8")as file:
-    file.write('re new dataaaaaaaaaaaaaaaaaaaaadsdasdasdasd')
-    file.seek(0) # 커서를 처음위치로
+
+#1) w+ (읽기+쓰기 모두 가능 - 덮어쓰기..기존 데이터를 모두 지우고 작성)
+with open('files/ggg.txt', 'w+', encoding='UTF-8') as file:
+    file.write('new data........')
+    #파일커서의 위치가 글씨의 마지막에 있어서 그냥 읽으면..이후 데이터 없음.
+    file.seek(0) #커서를 처음 위치로..
     contents= file.read()
     print(contents)
 
-    #기존에 꺼를 전부다 지우고 새롭게 작성
-#2) a+
+#2) a+ (읽기+쓰기 ~ 이어붙이기)
+with open('files/ggg.txt', 'a+', encoding='utf-8') as file:
+    file.write('새로운 데이터~~~~~~')
+    file.seek(0)
+    print(file.read())
 
-with open('ggg.txt' , 'a+' , encoding="UTF-8")as f:
-    f.write(" test a+")
-    content = f.read()
-    print(content)
-#3) r+
+#3) r+ (읽기+쓰기 ~ 덮어쓰기..단... w+ 와 다르게.. 전체를 지워고 쓰지 않아요.. 그냥 처음부터 덮어서 써버림)
+with open('files/ggg.txt', 'r+', encoding='utf-8') as file:
+    file.write('덮어쓰기')
 
-with open("ggg.txt" , "r+" , encoding="UTF-8")as f:
-    f.write(" 3번째 test running..")
-    concat = f.read()
-    print(concat)
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
