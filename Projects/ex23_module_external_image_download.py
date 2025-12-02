@@ -1,42 +1,37 @@
+#네트워크 상의 이미지파일을 다운로드 하는 프로그램
+
+#requests [외부모듈 - 별도 설치필요 (터미널 > pip install requests )]
+
 import requests
-address = "https://cdn.pixabay.com/photo/2025/11/14/17/32/pool-9957219_1280.jpg"
-address = 'https://media.istockphoto.com/id/628097352/ko/%EC%82%AC%EC%A7%84/%EC%8B%A0%EC%84%A0%ED%95%9C-%EC%95%BC%EC%B1%84%EB%A9%B4.jpg?s=2048x2048&w=is&k=20&c=Y9kL6N79vsEF6YGuOkIjzUuiUFdiseJk4cwZFk1An3E='
-address = input("다운로드를 원하는 링크주소를 입력하세요: ")
+address= 'https://cdn.pixabay.com/photo/2021/02/12/12/19/starbucks-6008411_1280.jpg' #이미지파일의 인터넷경로(URL)
+address= 'https://cdn.pixabay.com/photo/2023/12/07/06/56/women-8434932_1280.jpg'
+address= input('다운로드를 원하는 이미지의 URL을 입력 : ')
 response= requests.get(address)
-print("응답코드:" , response.status_code)
-# print(response.text) # 이미지는 글씨가 아님. 당연히 알수없는 글씨들이 표시됨.
+print('응답코드 :', response.status_code)
+#print(response.text) #이미지는 글씨가 아님. 당연히 알수없는 글씨들이 표시됨
 #이미지는 2진수의 픽셀정보를 가지고 있는 데이터 파일임.
+#response 응답객체는 본인이 읽어온 바이너리데이터를 16진수로 보여줄 수 있음
 print(response.content)
 print()
 
+# 읽어온 이미지 파일데이터 덩어리를 내 컴퓨터에 파일로 저장하기(파일 처리 표준함수 open())
+#file= open('download/aaa.jpg', 'wb') #wb: write binary
 
-# file= open("download/aaa.jpg" , "wb")
-# file.write(response.content)
-print()
-# 위 작업은 파일명을 고정적으로 하기에 덮어씌워질 문제가 있다.
-# 그래서 날짜와 시간정보를 이용하여 파일명을 생성하여보겠다.
+# 파일명이 같으면 기존의 파일이 덮어쓰기되기에.. 중복되지 않는 파일명을 만들어야 함.
+# 가장 많이 활용되는 방법은 날짜와 시간정보를 이용하여 파일명을 생성
 import datetime
-now=datetime.datetime.now()
-print(now)
+now= datetime.datetime.now()
 
+# file_name= 'IMG_' + str(now)
+# file_name= file_name.replace(' ','')
+# file_name= file_name.replace('-','')
+# file_name= file_name.replace(':','').replace('.','')
+# file_name= file_name +".png"
 
-
-# print(str(now.year)+str(now.month)+str(now.second))
-
-
-# file_name = 'ING_' + str(now)
-# file_name = file_name.replace(' ', '').replace('-','').replace(':','').replace('.','')
-# file_name = file_name + ".png"
-# print(file_name)
-
-
-# 간소화
-file_name = 'IMG'+now.strftime('%y%m%d%H%M%S')+'.png'
+# 날짜를 이용한 특정 서식모양(format)으로 만들어주는 기능이 now 시간객체에 이미 존재함
+file_name= "IMG_" + now.strftime('%Y%m%d%H%M%S') + ".png"
 print(file_name)
 
-
-
-
-file=open('download/'+ file_name , "wb")
-file.write(response.content) #바이너리 데이터를 파일에 쓰기(저장)
+file= open('download/'+file_name, "wb")
+file.write(response.content) #바이너리 데이터를 파일에 쓰기!!(저장)
 file.close()
