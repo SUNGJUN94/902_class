@@ -100,3 +100,61 @@ print("*"*50)
 row=ee.loc[0:2] #0번째 인덱스 줄
 print(type(row))
 print(row)
+
+import matplotlib.pyplot as plt
+# 시간별 온도 데이터셋 필요
+plt.rcParams['font.family']='Malgun Gothic'
+
+
+hours = [6,9,12,15,18,21,24] # x축
+temperature = [10,14,18,20,17,13,11] # y축
+
+# plt.plot(hours,temperature , marker='|')
+
+# plt.title(" day 온도")
+# plt.xlabel("time")
+# plt.ylabel("'c")
+# plt.show()
+
+print("*"*50)
+
+# students = ['홍길동' , '김길동' , '박길동' , '문성준' , '서성준' , '김깁머']
+# score = [45,65,34,13,45,65]
+
+# plt.bar(students , score , color='skyblue')
+# plt.title("gkrtod")
+# plt.xlabel("time")
+# plt.ylabel("'c")
+
+
+# plt.show()
+
+data = {
+    '월': ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+    '매출액(만원)': [4200, 3900, 4500, 4700, 5200, 5800, 6100, 6400, 5900, 5500, 5300, 5000]
+}
+
+df = pd.DataFrame(data)
+print("롯데리아 매출 데이터")
+print(df)
+
+plt.figure(figsize=(8,5))
+plt.scatter(df['월'] , df['매출액(만원)'] , marker="o" )
+plt.title('롯데리아에 2025 월별 매출액')
+plt.xlabel("월")
+plt.ylabel("매출액")
+plt.grid(True)
+
+# 각 점위에 숫자 표시
+
+for i , value in enumerate(df['매출액(만원)']):
+    plt.text(i,value+50 , f'{value}' , ha='center')
+
+plt.show()
+
+
+
+
+
+
+
