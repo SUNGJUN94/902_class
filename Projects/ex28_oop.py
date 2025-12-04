@@ -26,4 +26,13 @@ print(bbb)
 
 print("학생의 국어 성적:" , aaa[1])
 print("학생 2 의 국어 성적 : " , bbb[1])
+
 print("*"*50)
+
+ccc = {'name' : 'sam' , 'kor':60 , 'eng' : 50 , 'math' : 60 }
+ccc['aver'] = (ccc['kor']+ccc['eng'] +ccc['math'])/3
+print(ccc)
+
+print("*"*50)
+
+print("학생의 수학성적:" , ccc['math'])
